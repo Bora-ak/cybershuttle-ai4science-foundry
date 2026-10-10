@@ -41,7 +41,7 @@ The three short `logs/*.log` files are auxiliary standalone runs. The authoritat
 Run these commands from an ICE login shell after copying or cloning this repository into a storage location with adequate quota (scratch is recommended). No user-specific absolute path is required.
 
 ```bash
-cd astropt-a2-submit
+cd registry/models/astronomy/astropt/recipes/reproducible-inference
 module purge
 module load miniforge/24.3.0-0
 eval "$(conda shell.bash hook)"
@@ -128,6 +128,8 @@ Reference H100 result from job `6133484`:
 | R² | 0.167680 | -0.000686 |
 
 The probe beats the mean baseline on both MSE and MAE. Embedding shape was `(1000, 768)`, embedding runtime was 46.50 seconds, and peak CUDA memory was 0.978 GB. Exact values are in `outputs/validation_mag_g.json`; the diagnostic plot is `outputs/mag_g_probe.png`.
+
+`mag_g` is the galaxy's apparent magnitude in the g optical band, so it represents a physically meaningful observable related to how bright the galaxy appears in that wavelength range. Because AstroPT is pretrained directly on galaxy images, a useful representation should preserve information related to observable galaxy properties such as brightness. The linear probe's improvement over the mean baseline therefore indicates that the AstroPT embeddings retain meaningful astronomical information rather than simply producing numerically valid vectors. The R² of 0.168 is modest, so this result should be interpreted as evidence that the embeddings contain recoverable information about `mag_g`, not that they fully determine the galaxy's magnitude.
 
 To run only the validation in an activated H100 allocation:
 
